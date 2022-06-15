@@ -1,5 +1,5 @@
-#ifndef JUGADOR
-#define JUGADOR
+#ifndef JUGADORH
+#define JUGADORH
 
 #include "Usuario.h"
 #include <string>

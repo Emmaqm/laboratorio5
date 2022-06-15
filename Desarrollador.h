@@ -1,5 +1,5 @@
-#ifndef DESARROLLADOR
-#define DESARROLLADOR
+#ifndef DESARROLLADORH
+#define DESARROLLADORH
 
 #include "Usuario.h"
 #include <string>
