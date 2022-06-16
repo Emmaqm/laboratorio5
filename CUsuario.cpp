@@ -20,17 +20,17 @@ void CUsuario::ingresarNickname(string nickname) {
 }
 
 bool CUsuario::altaUsuario() {
-    bool usu = false;
+    bool usuarioAgregado = false;
     if(this->tipoUsuario == JUGADOR) {
         Jugador* jugador = new Jugador(this->dtUsuario->getEmail(), this->dtUsuario->getPassword(), nickname, descripcion);
-        ManejadorUsuario* mu = ManejadorUsuario::getInstancia();
-        usu = mu->agregarUsuario(jugador);
+        ManejadorUsuario* manejadorUsuario = ManejadorUsuario::getInstancia();
+        usuarioAgregado = manejadorUsuario->agregarUsuario(jugador);
     } else if (this->tipoUsuario == DESARROLLADOR) {
         Desarrollador* desarrollador = new Desarrollador(this->dtUsuario->getEmail(), this->dtUsuario->getPassword(), empresa);
-        ManejadorUsuario* mu = ManejadorUsuario::getInstancia();
-        usu = mu->agregarUsuario(desarrollador);
+        ManejadorUsuario* manejadorUsuario = ManejadorUsuario::getInstancia();
+        usuarioAgregado = manejadorUsuario->agregarUsuario(desarrollador);
     }
-    return usu;
+    return usuarioAgregado;
 }
 
-void cancelar();
+void CUsuario::cancelar() {}

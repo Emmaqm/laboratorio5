@@ -6,7 +6,6 @@
 #include "Desarrollador.h"
 #include "ManejadorUsuario.h"
 #include "Jugador.h"
-#include <string>
 
 using namespace std;
 

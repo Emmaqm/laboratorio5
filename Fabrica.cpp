@@ -1,9 +1,11 @@
 #include "Fabrica.h"
-#include "CUsuario.h"
 
-Fabrica::Fabrica(){}
+#include "CUsuario.h"
+#include "CSesion.h"
 
 Fabrica* Fabrica::instancia = NULL;
+
+Fabrica::Fabrica(){}
 
 Fabrica* Fabrica::getInstancia(){
   if (instancia == NULL) {
@@ -14,6 +16,10 @@ Fabrica* Fabrica::getInstancia(){
 
 ICUsuario* Fabrica::getICUsuario() {
   return new CUsuario();
+}
+
+ICSesion* Fabrica::getICSesion() {
+  return new CSesion();
 }
 
 Fabrica::~Fabrica(){}

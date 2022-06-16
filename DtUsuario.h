@@ -13,7 +13,7 @@ class DtUsuario {
         DtUsuario(string email, string password);
         string getEmail();
         string getPassword();
-        virtual ~DtUsuario() = 0;
+        ~DtUsuario();
 };
 
 #endif

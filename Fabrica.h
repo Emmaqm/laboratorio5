@@ -2,6 +2,7 @@
 #define FABRICA
 
 #include "ICUsuario.h"
+#include "ICSesion.h"
 
 class Fabrica{
     private:
@@ -10,6 +11,7 @@ class Fabrica{
     public:
         static Fabrica* getInstancia();
         ICUsuario* getICUsuario();
+        ICSesion* getICSesion();
         ~Fabrica();
 };
 

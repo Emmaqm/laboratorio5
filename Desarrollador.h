@@ -2,7 +2,6 @@
 #define DESARROLLADORH
 
 #include "Usuario.h"
-#include <string>
 
 using namespace std;
 
