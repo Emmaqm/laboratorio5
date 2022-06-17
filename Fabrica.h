@@ -3,6 +3,7 @@
 
 #include "ICUsuario.h"
 #include "ICSesion.h"
+#include "ICCategoria.h"
 
 class Fabrica{
     private:
@@ -12,6 +13,7 @@ class Fabrica{
         static Fabrica* getInstancia();
         ICUsuario* getICUsuario();
         ICSesion* getICSesion();
+        ICCategoria* getICCategoria();
         ~Fabrica();
 };
 

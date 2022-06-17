@@ -2,6 +2,7 @@
 
 #include "CUsuario.h"
 #include "CSesion.h"
+#include "CCategoria.h"
 
 Fabrica* Fabrica::instancia = NULL;
 
@@ -20,6 +21,10 @@ ICUsuario* Fabrica::getICUsuario() {
 
 ICSesion* Fabrica::getICSesion() {
   return new CSesion();
+}
+
+ICCategoria* Fabrica::getICCategoria() {
+  return new CCategoria();
 }
 
 Fabrica::~Fabrica(){}

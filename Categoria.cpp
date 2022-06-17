@@ -2,30 +2,30 @@
 
 Categoria::Categoria() {}
 
-Categoria::Categoria(string tipoGenero, string tipoPlataforma, string descripcion){
-    this->tipoGenero;
-    this->tipoPlataforma;
-    this->descripcion;
+Categoria::Categoria(string genero, string plataforma, string descripcion){
+    this->genero = genero;
+    this->plataforma = plataforma;
+    this->descripcion = descripcion;
 }
 
-string Categoria::getTipoGenero() {
-    return this->tipoGenero;
+string Categoria::getGenero() {
+    return this->genero;
 }
 
-string Categoria::getTipoPlataforma() {
-    return this->tipoPlataforma;
+string Categoria::getPlataforma() {
+    return this->plataforma;
 }
 
 string Categoria::getDescripcion() {
     return this->descripcion;
 }
 
-void Categoria::setTipoGenero(string tipoGenero) {
-    this->tipoGenero = tipoGenero;
+void Categoria::setGenero(string genero) {
+    this->genero = genero;
 }
 
-void Categoria::setTipoPlataforma(string tipoPlataforma) {
-    this->tipoPlataforma = tipoPlataforma;
+void Categoria::setPlataforma(string plataforma) {
+    this->plataforma = plataforma;
 }
 
 void Categoria::setDescripcion(string descripcion) {

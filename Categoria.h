@@ -6,19 +6,19 @@ using namespace std;
 
 class Categoria {
     private:
-        string tipoGenero;
-        string tipoPlataforma;
+        string genero;
+        string plataforma;
         string descripcion;
     public:
         Categoria();
-        Categoria(string tipoGenero, string tipoPlataforma, string descripcion);
-        string getTipoGenero();
-        string getTipoPlataforma();
+        Categoria(string genero, string plataforma, string descripcion);
+        string getGenero();
+        string getPlataforma();
         string getDescripcion();
-        void setTipoGenero(string tipoGenero);
-        void setTipoPlataforma(string tipoPlataforma);
+        void setGenero(string genero);
+        void setPlataforma(string plataforma);
         void setDescripcion(string descripcion);
-        virtual ~Categoria() = 0;
+        ~Categoria();
 };
 
 #endif

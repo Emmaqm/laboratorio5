@@ -4,8 +4,8 @@
 #include "ICUsuario.h"
 #include "TipoUsuario.h"
 #include "Desarrollador.h"
-#include "ManejadorUsuario.h"
 #include "Jugador.h"
+#include "ManejadorUsuario.h"
 
 using namespace std;
 

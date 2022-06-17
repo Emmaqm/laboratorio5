@@ -1,6 +1,7 @@
 #include "Fabrica.h"
 #include "ICUsuario.h"
 #include "ICSesion.h"
+#include "ICCategoria.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,6 +12,7 @@ using namespace std;
 Fabrica *fabrica;
 ICUsuario *controladorUsuario;
 ICSesion *controladorSesion;
+ICCategoria *controladorCategoria;
 
 void seederUsuario()
 {
@@ -94,52 +96,135 @@ void opcionCrearUsuario()
     }
 }
 
+void opcionCerrarSesion()
+{
+    bool loggedOut = controladorSesion->cerrarSesion();
+    if (loggedOut)
+    {
+        cout << "Sesión cerrada" << endl;
+    }
+    else
+    {
+        cout << "No hay sesión iniciada" << endl;
+    }
+}
+
+void opcionAgregarCategoria()
+{
+    controladorCategoria = fabrica->getICCategoria();
+    list<string> categorias = controladorCategoria->listarCategorias();
+
+    if (!categorias.empty())
+    {
+        cout << "Se listan las Categorias disponibles" << endl;
+        for (list<string>::iterator it = categorias.begin(); it != categorias.end(); it++)
+        {
+            cout << (*it) << endl;
+        }
+    }
+    else
+    {
+        cout << "No hay categorias disponibles" << endl;
+    }
+
+    string genero, plataforma, descripcion;
+
+    cout << "Ingresar categoria: " << endl;
+    cout << "Ingrese el genero: " << endl;
+    cin >> genero;
+    cout << "Ingrese la plataforma: " << endl;
+    cin >> plataforma;
+    cout << "Ingrese la descripcion: " << endl;
+    cin >> descripcion;
+
+    controladorCategoria->ingresarDatos(genero, plataforma, descripcion);
+
+    cout << "¿Desea agregar la categoria? (s/n)" << endl;
+    char confirm;
+    cin >> confirm;
+    if (confirm == 's' || confirm == 'S') {
+        if (controladorCategoria->agregarCategoria()) {
+            cout << "Categoria agregada" << endl;
+        } else {
+            cout << "Categoria ya existe" << endl;
+        }
+    } else {
+        cout << "Categoria no agregada" << endl;
+    }
+}
+
 int main()
 {
     fabrica = Fabrica::getInstancia();
     controladorSesion = fabrica->getICSesion();
 
-    bool seguir = false;
+    bool seguir = true;
     string emailUsuario, tipoUsuario;
     int opcion;
 
     seederUsuario();
     do
     {
+        controladorSesion->datosUsuario(emailUsuario, tipoUsuario);
         if (emailUsuario.empty())
         {
-            cout << "Sesión no iniciada" << endl;
+            cout << "Bienvenido!:" << endl;
             cout << "Puede iniciar sesión utilizando el usuario administrador:" << endl;
             cout << "Email: admin@admin.com" << endl;
             cout << "Password: admin" << endl;
+
+            cout << "Opciones:" << endl;
+            cout << "1. Iniciar sesión" << endl;
+            cout << "2. Crear usuario" << endl;
+            cout << "Ingrese una opción:" << endl;
+            cin >> opcion;
+
+            switch (opcion)
+            {
+            case 1:
+            {
+                opcionIniciarSesion();
+            }
+            break;
+            case 2:
+            {
+                opcionCrearUsuario();
+            }
+            break;
+            default:
+                break;
+            }
         }
         else
         {
             cout << "Bienvenido " << emailUsuario << "!"
                  << " [" << tipoUsuario << "]" << endl;
-        }
 
-        cout << "Bienvenido!:" << endl;
-        cout << "1. Iniciar sesión" << endl;
-        cout << "2. Crear usuario" << endl;
+            cout << "Opciones:" << endl;
+            cout << "1. Crear usuario" << endl;
+            cout << "2. Agregar categoria" << endl;
+            cout << "0. Cerrar sesión" << endl;
+            cout << "Ingrese una opción:" << endl;
+            cin >> opcion;
 
-        cin >> opcion;
-
-        switch (opcion)
-        {
-        case 1:
-        {
-            opcionIniciarSesion();
-        }
-        break;
-        case 2:
-        {
-            opcionCrearUsuario();
-        }
-        break;
-
-        default:
+            switch (opcion)
+            {
+            case 0:
+            {
+                opcionCerrarSesion();
+            }
+            case 1:
+            {
+                opcionCrearUsuario();
+            }
+            case 2:
+            {
+                opcionAgregarCategoria();
+            }
             break;
+            default:
+                break;
+            }
         }
 
     } while (seguir);

@@ -17,6 +17,7 @@ class CSesion:public ICSesion{
         void ingresarEmail(string email);
         void ingresarPassword(string password);
         bool iniciarSesion();
+        bool cerrarSesion();
         void datosUsuario(string &nombre, string &tipo);
 };
 
