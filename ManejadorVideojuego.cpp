@@ -13,15 +13,24 @@ ManejadorVideojuego* ManejadorVideojuego::getInstancia(){
 
 list<Videojuego*> ManejadorVideojuego::getVideojuegos(){
     list<Videojuego*> juegos;
-    for(map<string, Videojuego*>::iterator it = this->colVideojuegos.begin(); it != this->colVideojuegos.end(); it++)
+    for(map<string, Videojuego*>::iterator it = this->colVideojuegos.begin(); it != this->colVideojuegos.end(); it++) {
         juegos.push_back(it->second);
+    }
     return juegos;
+}
+
+bool ManejadorVideojuego::existeVideojuego(string nombre){
+    map<string, Videojuego*>::iterator iter = this->colVideojuegos.find(nombre);
+    if(iter != this->colVideojuegos.end()){
+        return true;
+    }
+    return false;
 }
 
 Videojuego* ManejadorVideojuego::getVideojuego(string nombre){
     Videojuego* videojuego = NULL;
     map<string, Videojuego*>::iterator iter = this->colVideojuegos.find(nombre);
-    if(iter != colVideojuegos.end()){
+    if(iter != this->colVideojuegos.end()){
         videojuego = iter->second;
     }
     return videojuego;

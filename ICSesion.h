@@ -16,7 +16,6 @@ class ICSesion {
         virtual void datosUsuario(string &nombre, string &tipo) = 0;
         virtual bool esDesarrollador() = 0;
         virtual bool esJugador() = 0;
-        virtual Jugador* getJugador() = 0;
 };
 
 

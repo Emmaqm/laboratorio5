@@ -29,6 +29,7 @@ class Videojuego{
         void setDescripcion(string descripcion);
         void setCosto(int costo);
         void setCategorias(map<string, Categoria*> categorias);
+        bool agregarSuscripcion(Suscripcion* suscripcion);
         ~Videojuego();
 };
 

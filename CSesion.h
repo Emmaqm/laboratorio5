@@ -22,7 +22,6 @@ class CSesion:public ICSesion{
         void datosUsuario(string &nombre, string &tipo);
         bool esDesarrollador();
         bool esJugador();
-        Jugador* getJugador();
 };
 
 #endif

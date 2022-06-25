@@ -45,6 +45,12 @@ void Videojuego::setCategorias(map<string, Categoria*> categorias){
     this->categorias = categorias;
 }
 
+bool Videojuego::agregarSuscripcion(Suscripcion* suscripcion){
+    pair<map<string, Suscripcion*>::iterator,bool> it;
+    it = this->suscripciones.insert(pair<string, Suscripcion*> (suscripcion->getUsuario()->getEmail(), suscripcion));
+    return it.second;
+}
+
 Videojuego::~Videojuego(){}
 
 

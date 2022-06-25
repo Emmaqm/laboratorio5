@@ -86,16 +86,3 @@ bool CSesion::esJugador(){
     return aux;
 }
 
-
-Jugador* CSesion::getJugador(){
-    Sesion* sesionActual = Sesion::getInstancia();
-    if(sesionActual->getUsuario() != NULL){
-        Jugador* jugador = dynamic_cast<Jugador*>(sesionActual->getUsuario());
-        if(jugador != NULL){
-            return jugador;
-        }
-    }
-    return NULL;
-}
-
-

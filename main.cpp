@@ -158,7 +158,7 @@ void opcionCrearUsuario()
         cout << "---------------------------------" << endl;
         cout << "| ❌  Tipo de usuario inválido  |" << endl;
         cout << "---------------------------------" << endl;
-
+        return;
     }
 
     if (controladorUsuario->altaUsuario())
@@ -346,32 +346,88 @@ void opcionSuscribirseVideojuego(){
     controladorSuscripcion = fabrica->getICSuscripcion();
     try
     {
+        list<string> suscripcionesActivas = controladorSuscripcion->listarSuscripcionesActivas();
+        list<string> suscripcionesInactivas = controladorSuscripcion->listarSuscripcionesInactivas();
 
-    list<string> suscripcionesActivas = controladorSuscripcion->listarSuscripcionesActivas();
-    list<string> suscripcionesInactivas = controladorSuscripcion->listarSuscripcionesInactivas();
-
-    cout << endl;
-    cout << "-------------------------------------------------------------" << endl;
-    cout << "| Suscribirse a videojuego                                  |" << endl;
-    cout << "-------------------------------------------------------------" << endl;
-
+        cout << endl;
+        cout << "-------------------------------------------------------------" << endl;
+        cout << "| Suscribirse a videojuego                                  |" << endl;
+        cout << "-------------------------------------------------------------" << endl;
 
         cout << "Se listan las suscripciones activas:" << endl;
         cout << "-------------------------------------------------------------" << endl;
-
         for (list<string>::iterator it = suscripcionesActivas.begin(); it != suscripcionesActivas.end(); it++)
         {
             cout << (*it) <<  endl;
         }
 
+        cout << endl;
         cout << "Se listan las suscripciones inactivas:" << endl;
         cout << "-------------------------------------------------------------" << endl;
-
         for (list<string>::iterator it = suscripcionesInactivas.begin(); it != suscripcionesInactivas.end(); it++)
         {
             cout << (*it) <<  endl;
         }
 
+        string nombre;
+        cout << endl;
+        cout << "Ingresar datos para suscribirse:" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+        cout << "Ingrese el nombre del videojuego: ";
+        cin >> nombre;
+
+        bool ingresado = controladorSuscripcion->ingresarVideojuego(nombre);
+
+        if(ingresado == false) {
+            cout << "------------------------------------" << endl;
+            cout << "| ❌ El juego ingresado no existe  |" << endl;
+            cout << "------------------------------------" << endl;
+        }else {
+            if(controladorSuscripcion->existeSuscripcion()) {
+                cout << "--------------------------------------------------------" << endl;
+                cout << "| ❌ Ya tienes una suscripción activa para este juego  |" << endl;
+                cout << "--------------------------------------------------------" << endl;
+            } else {
+                char tipo;
+                TipoPago tipoPago;
+                cout << "Ingrese su método de pago:" << endl;
+                cout << "(C)rédito o (D)ébito: ";
+                cin >> tipo;
+                if(tipo == 'C' || tipo == 'c') {
+                    tipoPago = CREDITO;
+                } else if (tipo == 'D' || tipo == 'd') {
+                    tipoPago = DEBITO;
+                } else {
+                    cout << "-------------------------------" << endl;
+                    cout << "| ❌ Método de pago inválido  |" << endl;
+                    cout << "-------------------------------" << endl;
+                    return;
+                }
+
+                controladorSuscripcion->ingresarMetodoPago(tipoPago);
+
+                char confirm;
+                cout << "Confirma la compra de esta suscripción (s/n): ";
+                cin >> confirm;
+
+                if (confirm == 's' || confirm == 'S'){
+                    if(controladorSuscripcion->agregarSuscripcion()) {
+                        cout << "------------------------------" << endl;
+                        cout << "| ✅  Suscripción adquirida  |" << endl;
+                        cout << "------------------------------" << endl;
+                    }else {
+                        cout << "--------------------------------------" << endl;
+                        cout << "| ❌  Error al adquirir suscripción  |" << endl;
+                        cout << "--------------------------------------" << endl;
+                    }
+                }else {
+                    cout << "-----------------------------" << endl;
+                    cout << "| 🔷 Suscripción cancelada  |" << endl;
+                    cout << "-----------------------------" << endl;
+                }
+
+            }
+        }
     }
     catch(invalid_argument ex)
     {
@@ -394,7 +450,7 @@ void opcionEliminarVideojuego(){
             }
             do{
                  cout << endl << " Ingrese el nombre del videojuego que desea eliminar: " << endl;
-                 cin>>opcion;  
+                 cin >> opcion;  
                  for(list<string>::iterator iter = videojuegos.begin(); iter != videojuegos.end(); ++iter){
                     if(*iter == opcion){
                         salir=true;
