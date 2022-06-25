@@ -12,12 +12,12 @@ ManejadorUsuario* ManejadorUsuario::getInstancia(){
 }
 
 Usuario* ManejadorUsuario::getUsuario(string email){
-    Usuario* usu = NULL; 
+    Usuario* usuario = NULL; 
     map<string, Usuario*>::iterator iter = this->colUsuarios.find(email);
     if(iter != colUsuarios.end()){
-        usu = iter->second;
+        usuario = iter->second;
     }
-    return usu;
+    return usuario;
 }
 
 void ManejadorUsuario::removerUsuario(Usuario* usuario){

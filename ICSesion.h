@@ -1,8 +1,9 @@
-#ifndef fICSESION
-#define fICSESION
+#ifndef ICSESION
+#define ICSESION
 
 #include <list>
 #include <string>
+#include "Jugador.h"
 
 using namespace std;
 
@@ -13,6 +14,9 @@ class ICSesion {
         virtual bool iniciarSesion() = 0;
         virtual bool cerrarSesion() = 0;
         virtual void datosUsuario(string &nombre, string &tipo) = 0;
+        virtual bool esDesarrollador() = 0;
+        virtual bool esJugador() = 0;
+        virtual Jugador* getJugador() = 0;
 };
 
 

@@ -14,9 +14,9 @@ class ManejadorUsuario{
         static ManejadorUsuario* getInstancia();
         list<Usuario*> getUsuarios();
         Usuario* getUsuario(string email);
-        void removerUsuario(Usuario*);
         bool agregarUsuario(Usuario*);
         bool existeUsuario(string email);
+        void removerUsuario(Usuario*);
         ~ManejadorUsuario();
 };  
 

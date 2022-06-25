@@ -1,6 +1,7 @@
 #ifndef CATEGORIA
 #define CATEGORIA
 #include <string>
+#include "DtCategoria.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ class Categoria {
         string getGenero();
         string getPlataforma();
         string getDescripcion();
+        DtCategoria* getDtCategoria();
         void setGenero(string genero);
         void setPlataforma(string plataforma);
         void setDescripcion(string descripcion);
