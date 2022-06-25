@@ -16,7 +16,8 @@ class CCategoria:public ICCategoria {
     public:
         void ingresarDatos(string genero, string plataforma, string descripcion);
         bool agregarCategoria();
-        list<string> listarCategorias();
+        bool seedCategoria();
+        list<DtCategoria*> listarCategorias();
 };
 
 #endif

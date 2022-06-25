@@ -20,6 +20,11 @@ string Categoria::getDescripcion() {
     return this->descripcion;
 }
 
+DtCategoria* Categoria::getDtCategoria() {
+    DtCategoria* dtCategoria = new DtCategoria(this->genero, this->plataforma, this->descripcion);
+    return dtCategoria;
+}
+
 void Categoria::setGenero(string genero) {
     this->genero = genero;
 }
