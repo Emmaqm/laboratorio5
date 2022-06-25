@@ -2,6 +2,7 @@
 #include "Fabrica.h"
 #include "ManejadorCategoria.h"
 #include "ManejadorVideojuego.h"
+#include "ManejadorUsuario.h"
 #include <stdexcept>
 
 void CVideojuego::ingresarDatos(string nombre, string descripcion, int costo) {
@@ -17,17 +18,7 @@ void CVideojuego::ingresarCategoria(DtCategoria* dtCategoria) {
 void CVideojuego::agregarJuego() {
     Fabrica* fabrica = Fabrica::getInstancia();
     ICSesion* controladorSesion = fabrica->getICSesion();
-    string emailUsuario, tipoUsuario;
-    controladorSesion->datosUsuario(emailUsuario, tipoUsuario);
-
-    if (emailUsuario.empty()) {
-        throw invalid_argument("Usuario no logueado");
-    }
-
-    if (tipoUsuario != "Desarrollador") {
-        throw invalid_argument("Usuario no es desarrollador");
-    }
-
+    Desarrollador* desarrollador = controladorSesion->getDesarrollador();
 
     ManejadorCategoria* manejadorCategoria = ManejadorCategoria::getInstancia();
     map<string, Categoria*> aux;
@@ -45,7 +36,7 @@ void CVideojuego::agregarJuego() {
         it++;
     }
 
-    Videojuego* videojuego = new Videojuego(this->nombre, this->descripcion, this->costo, aux);
+    Videojuego* videojuego = new Videojuego(this->nombre, this->descripcion, this->costo, aux, desarrollador);
     ManejadorVideojuego* manejadorJuego = ManejadorVideojuego::getInstancia();
     manejadorJuego->agregarVideojuego(videojuego);   
 }
@@ -67,7 +58,11 @@ void CVideojuego::seedJuego() {
         it++;
     }
 
-    Videojuego* videojuego = new Videojuego(this->nombre, this->descripcion, this->costo, aux);
+    ManejadorUsuario* manejadorUsuario = ManejadorUsuario::getInstancia();
+    Usuario* usuario = manejadorUsuario->getUsuario("admin@admin.com");
+    Desarrollador* desarrollador = dynamic_cast<Desarrollador *>(usuario);
+
+    Videojuego* videojuego = new Videojuego(this->nombre, this->descripcion, this->costo, aux, desarrollador);
     ManejadorVideojuego* manejadorJuego = ManejadorVideojuego::getInstancia();
     manejadorJuego->agregarVideojuego(videojuego);   
 }

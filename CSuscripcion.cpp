@@ -5,7 +5,7 @@
 list<string> CSuscripcion::listarSuscripcionesActivas(){
     ManejadorVideojuego* manejadorJuego = ManejadorVideojuego::getInstancia();
     Sesion *sesion = Sesion::getInstancia();
-
+    
     list<string> suscripcionesActivas;
     list<Videojuego*> juegos = manejadorJuego->getVideojuegos();
     list<Videojuego*>::iterator it = juegos.begin();
@@ -80,4 +80,10 @@ bool CSuscripcion::ingresarVideojuego(string nombre){
     return false;
 }
 
+bool CSuscripcion::eliminarSuscripcion(Videojuego* &vj){
+    ManejadorVideojuego* manejadorJuego = ManejadorVideojuego::getInstancia();
+    list<Videojuego*> juegos = manejadorJuego->getVideojuegos();
+    manejadorJuego* juego = juegos.find(&vj);
+    map<string, Suscripcion*>::iterator iter = (*it)->getSuscripciones().find(vj->getNombre());
 
+}

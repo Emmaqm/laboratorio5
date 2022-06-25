@@ -2,8 +2,6 @@
 #define CSESION
 #include "Sesion.h" 
 #include "ICSesion.h" 
-#include "Desarrollador.h" 
-#include "Jugador.h" 
 #include "ManejadorUsuario.h"
 #include <list>
 #include <string>
@@ -22,6 +20,7 @@ class CSesion:public ICSesion{
         void datosUsuario(string &nombre, string &tipo);
         bool esDesarrollador();
         bool esJugador();
+        Desarrollador* getDesarrollador();
 };
 
 #endif

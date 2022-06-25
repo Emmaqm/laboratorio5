@@ -61,28 +61,41 @@ void CSesion::datosUsuario(string &email, string &tipo)
     }
 }
 
-
-bool CSesion::esDesarrollador(){
-    bool aux=false;
-    Sesion* sesionActual = Sesion::getInstancia();
-    if(sesionActual->getUsuario()!=NULL){
-        if(Desarrollador* developer = dynamic_cast<Desarrollador*>(sesionActual->getUsuario())){
-            aux=true;
+bool CSesion::esDesarrollador()
+{
+    bool aux = false;
+    Sesion *sesionActual = Sesion::getInstancia();
+    if (sesionActual->getUsuario() != NULL)
+    {
+        if (Desarrollador *developer = dynamic_cast<Desarrollador *>(sesionActual->getUsuario()))
+        {
+            aux = true;
         }
-
     }
     return aux;
 }
 
-bool CSesion::esJugador(){
-    bool aux=false;
-    Sesion* sesionActual = Sesion::getInstancia();
-    if(sesionActual->getUsuario()!=NULL){
-        if(Jugador* jugador = dynamic_cast<Jugador*>(sesionActual->getUsuario())){
-            aux=true;
-        }
+Desarrollador *CSesion::getDesarrollador()
+{
+    Sesion *sesion = Sesion::getInstancia();
+    Desarrollador* desarrollador = NULL;
+    if (sesion->getUsuario() != NULL)
+    {
+        desarrollador = dynamic_cast<Desarrollador *>(sesion->getUsuario());
+    }
+    return desarrollador;
+}
 
+bool CSesion::esJugador()
+{
+    bool aux = false;
+    Sesion *sesionActual = Sesion::getInstancia();
+    if (sesionActual->getUsuario() != NULL)
+    {
+        if (Jugador *jugador = dynamic_cast<Jugador *>(sesionActual->getUsuario()))
+        {
+            aux = true;
+        }
     }
     return aux;
 }
-

@@ -2,6 +2,7 @@
 #define CVIDEOJUEGO
 
 #include "ICVideojuego.h"
+#include "Desarrollador.h"
 
 #include <string>
 #include <list>
