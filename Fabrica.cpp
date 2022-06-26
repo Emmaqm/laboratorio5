@@ -48,8 +48,8 @@ ICInfoVideojuego* Fabrica::getICInfoVideojuego(){
   return new CInfoVideojuego(); 
 }
 
-// ICIniciarPartida* Fabrica::getICIniciarPartida(){
-//   return new CIniciarPartida(); 
-// }
+ICIniciarPartida* Fabrica::getICIniciarPartida(){
+  return new CIniciarPartida(); 
+}
 
 Fabrica::~Fabrica(){}

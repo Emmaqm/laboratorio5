@@ -30,8 +30,7 @@ void CEliminarVideojuego::eliminarVideojuego() {
     ma->removerVideojuego(videojuego);
 
     videojuego->eliminarSuscripciones();
-
-    //todo: Eliminar partidas
+    videojuego->eliminarPartidas();
 
     delete videojuego;
 }

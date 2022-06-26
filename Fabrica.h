@@ -23,7 +23,7 @@ class Fabrica{
         ICEliminarVideojuego* getICEliminarVideojuego();
         ICSuscripcion* getICSuscripcion();
         ICInfoVideojuego* getICInfoVideojuego();
-        // ICIniciarPartida* getICIniciarPartida();
+        ICIniciarPartida* getICIniciarPartida();
         ~Fabrica();
 };
 

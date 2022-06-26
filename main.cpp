@@ -6,8 +6,8 @@
 #include "ICEliminarVideojuego.h"
 #include "ICSuscripcion.h"
 #include "ICInfoVideojuego.h"
+#include "ICIniciarPartida.h"
 #include "DtVideojuegoFull.h"
-#include "TipoJuego.h" // ver si es necesario
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -24,6 +24,7 @@ ICVideojuego *controladorVideojuego;
 ICEliminarVideojuego *controladorElimVideojuego;
 ICSuscripcion *controladorSuscripcion;
 ICInfoVideojuego *controladorInfoVideojuego;
+ICIniciarPartida *controladorIniciarPartida;
 
 void seederUsuario()
 {
@@ -536,13 +537,15 @@ void opcionEliminarVideojuego()
 
 void opcionVerInfoVideojuego()
 {
+    controladorInfoVideojuego = fabrica->getICInfoVideojuego();
+
     bool encontrado = false;
     string opcion;
     list<string> infoVideojuego = controladorInfoVideojuego->listarVideojuegos();
     
     if (!infoVideojuego.empty())
     {
-        cout << "Ingrese el nombre del juego cual desea ver la informacion:";
+        cout << "Ingrese el nombre del juego cual desea ver la informacion:" << endl;
         cout << "-------------------------------------------------------------" << endl;
         for (list<string>::iterator it = infoVideojuego.begin(); it != infoVideojuego.end(); it++)
         {
@@ -575,6 +578,9 @@ void opcionVerInfoVideojuego()
             
             cout << "Empresa:" << endl;
             cout << aux->getEmpresa() <<endl;
+            
+            cout << "Cantidad total de horas:" << endl;
+            cout << aux->getDuracionTotal() <<endl;
              
         }
     
@@ -584,8 +590,8 @@ void opcionVerInfoVideojuego()
 
 void opcionIniciarPartida()
 {
-    controladorSuscripcion = fabrica->getICSuscripcion();
-    list<string> suscripcionesActivas = controladorSuscripcion->listarSuscripcionesActivas();
+    controladorIniciarPartida = fabrica->getICIniciarPartida();
+    list<string> suscripcionesActivas = controladorIniciarPartida->listarSuscripcionesActivas();
 
     cout << endl;
     cout << "-------------------------------------------------------------" << endl;
@@ -605,37 +611,39 @@ void opcionIniciarPartida()
     cout << "-------------------------------------------------------------" << endl;
     cout << "Ingrese el nombre del videojuego: ";
     cin >> nombre;
+
+    controladorIniciarPartida->seleccionarVideojuego(nombre);
     
     char tipo;
-    TipoJuego tipoJuego;
     cout << "Desea iniciar una partida (I)ndividual o (M)ultijugador: ";
     cin >> tipo;
     if (tipo == 'I' || tipo == 'i')
     {
-        tipoJuego = INDIVIDUAL;
-
         cout << "¿La partida es una continuación de la anterior? (s/n): ";
         char confirm;
-        bool esContinuacion;
+        bool continuaPartida;
         cin >> confirm;
         if (confirm == 's' || confirm == 'S')
         {
-            esContinuacion = true;
+            continuaPartida = true;
         } else {
-            esContinuacion = false;
+            continuaPartida = false;
         }
+        
+        int duracion;
+        cout << "Ingrese la duración de la partida (en minutos): "; 
+        cin >> duracion;
+
+        controladorIniciarPartida->datosPartidaIndividual(continuaPartida, duracion);
         
     }
     else if (tipo == 'M' || tipo == 'm')
     {
-        tipoJuego = MULTIJUGADOR;
-
         cout << "¿La partida se trasmitirá en vivo? (s/n): ";
         char confirm;
         bool enVivo;
         cin >> confirm;
-        if (confirm == 's' || confirm == 'S')
-        {
+        if (confirm == 's' || confirm == 'S') {
             enVivo = true;
         } else {
             enVivo = false;
@@ -649,8 +657,7 @@ void opcionIniciarPartida()
         cout << "Ingrese la duración de la partida (en minutos): "; 
         cin >> duracion;
 
-
-
+        controladorIniciarPartida->datosPartidaMultijugador(enVivo, cantJugadores, duracion);
     }
     else
     {
@@ -660,8 +667,28 @@ void opcionIniciarPartida()
         return;
     }
     
-    
-    
+    char iniciar;
+    cout << "¿Confirma iniciar la partida? (s/n): ";
+    cin >> iniciar;
+
+    if (iniciar == 's' || iniciar == 'S')
+    {
+        if(controladorIniciarPartida->iniciarPartida()) {
+            cout << "-------------------------" << endl;
+            cout << "| ✅  Partida iniciada  |" << endl;
+            cout << "-------------------------" << endl;
+        }else {
+            cout << "----------------------------------" << endl;
+            cout << "| ❌ Datos del juego incorrectos |" << endl;
+            cout << "----------------------------------" << endl;
+        }
+    }
+    else
+    {
+        cout << "---------------------------" << endl;
+        cout << "| 🔷 Partida no iniciada  |" << endl;
+        cout << "---------------------------" << endl;
+    }
 }
 
 int main()

@@ -1,5 +1,5 @@
-sistema: DtUsuario.o ManejadorUsuario.o ManejadorCategoria.o ManejadorVideojuego.o CSuscripcion.o CVideojuego.o CInfoVideojuego.o CEliminarVideojuego.o CCategoria.o CUsuario.o CSesion.o Suscripcion.o Videojuego.o Categoria.o DtVideojuegoFull.o DtFecha.o DtCategoria.o Usuario.o Desarrollador.o Jugador.o Sesion.o Fabrica.o main.o
-	g++ DtUsuario.o ManejadorUsuario.o ManejadorCategoria.o ManejadorVideojuego.o CSuscripcion.o CVideojuego.o CInfoVideojuego.o CEliminarVideojuego.o CCategoria.o CUsuario.o CSesion.o Suscripcion.o Videojuego.o Categoria.o DtVideojuegoFull.o DtFecha.o DtCategoria.o Usuario.o Desarrollador.o Jugador.o Sesion.o Fabrica.o main.o -g -o sistema
+sistema: DtUsuario.o ManejadorUsuario.o ManejadorCategoria.o ManejadorVideojuego.o CIniciarPartida.o CSuscripcion.o CVideojuego.o CInfoVideojuego.o CEliminarVideojuego.o CCategoria.o CUsuario.o CSesion.o Suscripcion.o Videojuego.o Categoria.o Partida.o PartidaIndividual.o PartidaMultijugador.o DtVideojuegoFull.o DtFecha.o DtCategoria.o Usuario.o Desarrollador.o Jugador.o Sesion.o Fabrica.o main.o
+	g++ DtUsuario.o ManejadorUsuario.o ManejadorCategoria.o ManejadorVideojuego.o CIniciarPartida.o CSuscripcion.o CVideojuego.o CInfoVideojuego.o CEliminarVideojuego.o CCategoria.o CUsuario.o CSesion.o Suscripcion.o Videojuego.o Categoria.o Partida.o PartidaIndividual.o PartidaMultijugador.o DtVideojuegoFull.o DtFecha.o DtCategoria.o Usuario.o Desarrollador.o Jugador.o Sesion.o Fabrica.o main.o -g -o sistema
 
 DtUsuario.o: DtUsuario.cpp
 	g++ -g -c DtUsuario.cpp
@@ -12,6 +12,9 @@ ManejadorCategoria.o: ManejadorCategoria.cpp
 
 ManejadorVideojuego.o: ManejadorVideojuego.cpp
 	g++ -g -c ManejadorVideojuego.cpp
+
+CIniciarPartida.o: CIniciarPartida.cpp
+	g++ -g -c CIniciarPartida.cpp
 
 CSuscripcion.o: CSuscripcion.cpp
 	g++ -g -c CSuscripcion.cpp
@@ -63,6 +66,15 @@ Jugador.o: Jugador.cpp
 
 Sesion.o: Sesion.cpp
 	g++ -g -c Sesion.cpp
+
+Partida.o: Partida.cpp
+	g++ -g -c Partida.cpp
+
+PartidaIndividual.o: PartidaIndividual.cpp
+	g++ -g -c PartidaIndividual.cpp
+
+PartidaMultijugador.o: PartidaMultijugador.cpp
+	g++ -g -c PartidaMultijugador.cpp
 
 Fabrica.o: Fabrica.cpp
 	g++ -g -c Fabrica.cpp

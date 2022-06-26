@@ -35,9 +35,7 @@ Desarrollador* Videojuego::getDesarrollador() {
 }
 
 DtVideojuegoFull* Videojuego::getDtVideojuegoFull() {
-
     string empresa = this->desarrollador->getEmpresa(); 
-
     list<DtCategoria*> aux;
 
     map<string, Categoria*>::iterator it = this->categorias.begin();
@@ -47,8 +45,14 @@ DtVideojuegoFull* Videojuego::getDtVideojuegoFull() {
         it++;
     }
 
+    int duracionTotal = 0;
+    map<int, Partida*>::iterator itP = this->partidas.begin();
+    while(itP != this->partidas.end()){  
+        duracionTotal = duracionTotal + itP->second->getDuracionTotal();
+        itP++;
+    }
 
-    DtVideojuegoFull* dtvideojuegofull = new DtVideojuegoFull(this->nombre, this->descripcion, this->costo, aux, empresa);
+    DtVideojuegoFull* dtvideojuegofull = new DtVideojuegoFull(this->nombre, this->descripcion, this->costo, aux, empresa, duracionTotal);
     return dtvideojuegofull;
 }
 
@@ -84,7 +88,16 @@ void Videojuego::eliminarSuscripciones(){
     }
 }
 
-Videojuego::~Videojuego(){};
+void Videojuego::eliminarPartidas(){
+    for(map<int, Partida*>::iterator it = this->partidas.begin(); it != this->partidas.end(); it++) {
+        this->partidas.erase(it);
+    }
+}
 
+bool Videojuego::agregarPartida(Partida* partida) {
+    pair<map<int, Partida*>::iterator,bool> it;
+    it = this->partidas.insert(pair<int, Partida*> (this->partidas.size(), partida));
+    return it.second;
+}
 
-
+Videojuego::~Videojuego() {};

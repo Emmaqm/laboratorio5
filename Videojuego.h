@@ -3,6 +3,7 @@
 
 #include "Categoria.h"
 #include "Suscripcion.h"
+#include "Partida.h"
 #include "Desarrollador.h"
 #include "DtVideojuegoFull.h"
 
@@ -19,6 +20,7 @@ class Videojuego{
         int costo;
         map<string, Categoria*> categorias;
         map<string, Suscripcion*> suscripciones;
+        map<int, Partida*> partidas;
         Desarrollador* desarrollador;
     public:
         Videojuego();
@@ -36,7 +38,9 @@ class Videojuego{
         void setDesarrollador(Desarrollador* desarrollador);
         bool agregarSuscripcion(Suscripcion* suscripcion);
         void eliminarSuscripciones();
+        void eliminarPartidas();
         DtVideojuegoFull* getDtVideojuegoFull();
+        bool agregarPartida(Partida* partida);
 
         ~Videojuego();
 };

@@ -1,6 +1,9 @@
 #include "CIniciarPartida.h" 
 #include "ManejadorVideojuego.h" 
-#include "Sesion.h" 
+#include "Sesion.h"
+#include "PartidaMultijugador.h"
+#include "PartidaIndividual.h"
+
 
 list<string> CIniciarPartida::listarSuscripcionesActivas(){
     ManejadorVideojuego* manejadorJuego = ManejadorVideojuego::getInstancia();
@@ -19,4 +22,44 @@ list<string> CIniciarPartida::listarSuscripcionesActivas(){
     }
   
     return suscripcionesActivas;
+}
+
+void CIniciarPartida::seleccionarVideojuego(string nombre) {
+    this->nombre = nombre;
+}
+
+void CIniciarPartida::datosPartidaIndividual(bool continuaPartida, int duracion) {
+    this->continuaPartida = continuaPartida;
+    this->duracion = duracion;
+    this->tipoPartida = INDIVIDUAL;
+}
+
+void CIniciarPartida::datosPartidaMultijugador(bool enVivo, int cantJugadores, int duracion) {
+    this->enVivo = enVivo;
+    this->cantJugadores = cantJugadores;
+    this->duracion = duracion;
+    this->tipoPartida = MULTIJUGADOR;
+}
+
+bool CIniciarPartida::iniciarPartida() {
+    ManejadorVideojuego* manejadorJuego = ManejadorVideojuego::getInstancia();
+    Videojuego* videojuego = manejadorJuego->getVideojuego(this->nombre);
+    Sesion *sesion = Sesion::getInstancia();
+
+    if(videojuego == NULL) {
+        return false;
+    }
+
+    DtFecha* fecha = new DtFecha();
+
+    if(this->tipoPartida == INDIVIDUAL) {
+        PartidaIndividual* partida = new PartidaIndividual(this->duracion, sesion->getUsuario(), fecha, this->continuaPartida);
+        return videojuego->agregarPartida(partida);
+
+    } else if (this->tipoPartida == MULTIJUGADOR) {
+        PartidaMultijugador* partida = new PartidaMultijugador(this->duracion, sesion->getUsuario(), fecha, this->enVivo, this->cantJugadores);
+        return videojuego->agregarPartida(partida);
+    }
+
+    return false;
 }

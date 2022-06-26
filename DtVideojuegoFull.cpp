@@ -2,12 +2,13 @@
 
 DtVideojuegoFull::DtVideojuegoFull() {}
 
-DtVideojuegoFull::DtVideojuegoFull(string nombre, string descripcion, int costo, list<DtCategoria*> categorias, string empresa) {
+DtVideojuegoFull::DtVideojuegoFull(string nombre, string descripcion, int costo, list<DtCategoria*> categorias, string empresa, int duracionTotal) {
     this->nombre = nombre;
     this->descripcion = descripcion;
     this->costo = costo;
     this->categorias = categorias;
     this->empresa = empresa;
+    this->duracionTotal = duracionTotal;
 }
 
 string DtVideojuegoFull::getNombre() {
@@ -25,8 +26,13 @@ int DtVideojuegoFull::getCosto() {
 list<DtCategoria*> DtVideojuegoFull::getCategorias() {
     return this->categorias;
 }
+
 string DtVideojuegoFull::getEmpresa() {
     return this->empresa;
+}
+
+int DtVideojuegoFull::getDuracionTotal() {
+    return this->duracionTotal;
 }
 
 DtVideojuegoFull::~DtVideojuegoFull(){}
