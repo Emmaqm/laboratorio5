@@ -29,7 +29,6 @@ class Videojuego{
         map<string, Categoria*> getCategorias();
         map<string, Suscripcion*> getSuscripciones();
         Desarrollador* getDesarrollador();
-        DtVideojuegoFull* getDtVideojuegoFull();
         void setNombre(string nombre);
         void setDescripcion(string descripcion);
         void setCosto(int costo);
@@ -37,6 +36,8 @@ class Videojuego{
         void setDesarrollador(Desarrollador* desarrollador);
         bool agregarSuscripcion(Suscripcion* suscripcion);
         void eliminarSuscripciones();
+        DtVideojuegoFull* getDtVideojuegoFull();
+
         ~Videojuego();
 };
 

@@ -2,15 +2,16 @@
 #define CINFOVIDEOJUEGO
 
 
-#include "ICInfoVideojuego.h"
 #include "ManejadorVideojuego.h"
+#include "DtVideojuegoFull.h"
+#include "ICInfoVideojuego.h"
 
 #include <list>
 #include <string>
 
 using namespace std;
 
-class CInfoVideojuego:public ICInfovideojuego {
+class CInfoVideojuego:public ICInfoVideojuego {
   private:
     string nombre;
   public:

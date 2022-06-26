@@ -15,7 +15,6 @@ list<string> CSuscripcion::listarSuscripcionesActivas(){
             string suscripcion = (*it)->getNombre() + " ($" + to_string((*it)->getCosto()) + ")";
             suscripcionesActivas.push_back(suscripcion);
         }
-
         it++;
     }
   

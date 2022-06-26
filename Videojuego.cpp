@@ -1,5 +1,5 @@
 #include "Videojuego.h"
-
+#include "DtVideojuegoFull.h"
 Videojuego::Videojuego(){}
 
 Videojuego::Videojuego(string nombre, string descripcion, int costo, map<string, Categoria*> categorias, Desarrollador* desarrollador){

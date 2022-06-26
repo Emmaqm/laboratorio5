@@ -5,10 +5,14 @@
 #include "ICVideojuego.h"
 #include "ICEliminarVideojuego.h"
 #include "ICSuscripcion.h"
+#include "ICInfoVideojuego.h"
+#include "DtVideojuegoFull.h"
+#include "TipoJuego.h" // ver si es necesario
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -19,6 +23,7 @@ ICCategoria *controladorCategoria;
 ICVideojuego *controladorVideojuego;
 ICEliminarVideojuego *controladorElimVideojuego;
 ICSuscripcion *controladorSuscripcion;
+ICInfoVideojuego *controladorInfoVideojuego;
 
 void seederUsuario()
 {
@@ -39,13 +44,22 @@ void seederUsuario()
 void seederCategorias()
 {
     controladorCategoria = fabrica->getICCategoria();
-    controladorCategoria->ingresarDatos("Deportes", "PS4", "Descripcion");
+    controladorCategoria->ingresarDatos("Deportes", "PS4", "no puede tener");
     controladorCategoria->seedCategoria();
 
     controladorCategoria->ingresarDatos("Shooter", "PC", "Descripcion");
     controladorCategoria->seedCategoria();
 
     controladorCategoria->ingresarDatos("Plataforma", "Switch", "Descripcion");
+    controladorCategoria->seedCategoria();
+
+    controladorCategoria->ingresarDatos("Supervivencia", "Xbox", "Descripcion");
+    controladorCategoria->seedCategoria();
+
+    controladorCategoria->ingresarDatos("Arcade", "PS5", "Descripcion");
+    controladorCategoria->seedCategoria();
+
+    controladorCategoria->ingresarDatos("Aventura", "Wii", "Descripcion");
     controladorCategoria->seedCategoria();
 
     delete controladorCategoria;
@@ -467,6 +481,7 @@ void opcionEliminarVideojuego()
         if (!videojuegos.empty())
         {
             cout << "Videojuegos disponibles:" << endl;
+            cout << "-------------------------------------------------------------" << endl;
             for (list<string>::iterator it = videojuegos.begin(); it != videojuegos.end(); ++it)
             {
                 cout << (*it) << endl;
@@ -479,7 +494,7 @@ void opcionEliminarVideojuego()
             {
                 if (*iter == opcion)
                 {
-                    encontrado = true;                    
+                    encontrado = true;
                 }
             }
             if (encontrado)
@@ -519,18 +534,146 @@ void opcionEliminarVideojuego()
     }
 }
 
+void opcionVerInfoVideojuego()
+{
+    bool encontrado = false;
+    string opcion;
+    list<string> infoVideojuego = controladorInfoVideojuego->listarVideojuegos();
+    
+    if (!infoVideojuego.empty())
+    {
+        cout << "Ingrese el nombre del juego cual desea ver la informacion:";
+        cout << "-------------------------------------------------------------" << endl;
+        for (list<string>::iterator it = infoVideojuego.begin(); it != infoVideojuego.end(); it++)
+        {
+            cout << (*it) << endl;
+        }
+        cin >> opcion;
+
+        for (list<string>::iterator iter = infoVideojuego.begin(); iter != infoVideojuego.end(); ++iter)
+        {
+            if (*iter == opcion)
+            {
+                encontrado = true;
+            }
+        }
+
+        if(encontrado){ 
+            DtVideojuegoFull* aux = new DtVideojuegoFull();
+            
+            controladorInfoVideojuego->selectVideojuego(opcion);
+            aux = controladorInfoVideojuego->verInformacionVideojuegos();
+            
+            cout << "Nombre:" <<endl;
+            cout << aux->getNombre() <<endl;
+            
+            cout << "Costo:" <<endl;
+            cout << aux->getCosto() <<endl;
+            
+            cout << "Descripcion:" <<endl;
+            cout << aux->getDescripcion() <<endl;
+            
+            cout << "Empresa:" << endl;
+            cout << aux->getEmpresa() <<endl;
+             
+        }
+    
+
+    }
+}
+
+void opcionIniciarPartida()
+{
+    controladorSuscripcion = fabrica->getICSuscripcion();
+    list<string> suscripcionesActivas = controladorSuscripcion->listarSuscripcionesActivas();
+
+    cout << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    cout << "| Iniciar partida                                           |" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+
+    cout << "Se listan los juegos con suscripcion activa:" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    for (list<string>::iterator it = suscripcionesActivas.begin(); it != suscripcionesActivas.end(); it++)
+    {
+        cout << (*it) << endl;
+    }
+    
+    string nombre;
+    cout << endl;
+    cout << "Ingresar datos para iniciar partida:" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    cout << "Ingrese el nombre del videojuego: ";
+    cin >> nombre;
+    
+    char tipo;
+    TipoJuego tipoJuego;
+    cout << "Desea iniciar una partida (I)ndividual o (M)ultijugador: ";
+    cin >> tipo;
+    if (tipo == 'I' || tipo == 'i')
+    {
+        tipoJuego = INDIVIDUAL;
+
+        cout << "¿La partida es una continuación de la anterior? (s/n): ";
+        char confirm;
+        bool esContinuacion;
+        cin >> confirm;
+        if (confirm == 's' || confirm == 'S')
+        {
+            esContinuacion = true;
+        } else {
+            esContinuacion = false;
+        }
+        
+    }
+    else if (tipo == 'M' || tipo == 'm')
+    {
+        tipoJuego = MULTIJUGADOR;
+
+        cout << "¿La partida se trasmitirá en vivo? (s/n): ";
+        char confirm;
+        bool enVivo;
+        cin >> confirm;
+        if (confirm == 's' || confirm == 'S')
+        {
+            enVivo = true;
+        } else {
+            enVivo = false;
+        }
+
+        int cantJugadores;
+        cout << "Ingrese la cantidad máxima de jugadores: "; 
+        cin >> cantJugadores;
+
+        int duracion;
+        cout << "Ingrese la duración de la partida (en minutos): "; 
+        cin >> duracion;
+
+
+
+    }
+    else
+    {
+        cout << "--------------------------------" << endl;
+        cout << "| ❌ Tipo de partida inválido  |" << endl;
+        cout << "--------------------------------" << endl;
+        return;
+    }
+    
+    
+    
+}
+
 int main()
 {
     fabrica = Fabrica::getInstancia();
     controladorSesion = fabrica->getICSesion();
 
+    seederUsuario();
+
     bool seguir = true;
     string emailUsuario, tipoUsuario;
     int opcion;
-
-    seederUsuario();
-    seederCategorias();
-    seederJuegos();
 
     do
     {
@@ -538,7 +681,7 @@ int main()
         if (emailUsuario.empty())
         {
             cout << "-------------------------------------------------------------" << endl;
-            cout << "|                       Bienvenido!                         |" << endl;
+            cout << "|                      ¡Bienvenido!                         |" << endl;
             cout << "-------------------------------------------------------------" << endl;
             cout << "| Puede iniciar sesión utilizando el usuario administrador: |" << endl;
             cout << "| Email: admin@admin.com                                    |" << endl;
@@ -548,6 +691,7 @@ int main()
             cout << "-------------------------------------------------------------" << endl;
             cout << "| (1) Iniciar sesión                                        |" << endl;
             cout << "| (2) Crear usuario                                         |" << endl;
+            cout << "| (3) Cargar datos de prueba                                |" << endl;
             cout << "-------------------------------------------------------------" << endl;
             cout << "| (0) Salir                                                 |" << endl;
             cout << "-------------------------------------------------------------" << endl;
@@ -571,6 +715,11 @@ int main()
                 opcionCrearUsuario();
             }
             break;
+            case 3:
+            {
+                seederCategorias();
+                seederJuegos();
+            }
             default:
                 break;
             }
@@ -580,7 +729,7 @@ int main()
             if (tipoUsuario == "Desarrollador")
             {
                 cout << endl;
-                cout << "Bienvenido " << emailUsuario << "!" << endl;
+                cout << "¡Bienvenido " << emailUsuario << "!" << endl;
                 cout << "-------------------------------------------------------------" << endl;
                 cout << "| Opciones:                                                 |" << endl;
                 cout << "-------------------------------------------------------------" << endl;
@@ -588,6 +737,7 @@ int main()
                 cout << "| (2) Agregar categoria                                     |" << endl;
                 cout << "| (3) Agregar videojuego                                    |" << endl;
                 cout << "| (4) Eliminar videojuego                                   |" << endl;
+                cout << "| (5) Mostrar informacion de videojuego                     |" << endl;
                 cout << "| (9) Cerrar sesión                                         |" << endl;
                 cout << "-------------------------------------------------------------" << endl;
                 cout << "| (0) Salir                                                 |" << endl;
@@ -622,6 +772,11 @@ int main()
                     opcionEliminarVideojuego();
                 }
                 break;
+                case 5:
+                {
+                    opcionVerInfoVideojuego();
+                }
+                break;
                 case 9:
                 {
                     opcionCerrarSesion();
@@ -634,13 +789,16 @@ int main()
             else
             {
                 cout << endl;
-                cout << "Bienvenido " << emailUsuario << "!" << endl;
+                cout << "¡Bienvenido " << emailUsuario << "!" << endl;
                 cout << "-------------------------------------------------------------" << endl;
                 cout << "| Opciones:                                                 |" << endl;
                 cout << "-------------------------------------------------------------" << endl;
                 cout << "| (1) Crear usuario                                         |" << endl;
                 cout << "| (2) Suscribirse a videojuego                              |" << endl;
-                cout << "| (9) Cerrar sesión                                         |" << endl;
+                cout << "| (3) Ver información de videojuego                         |" << endl;
+                cout << "| (4) Iniciar partida                                       |" << endl;
+                cout << "| (5) Mostrar informacion de videojuego                     |" << endl;
+                cout << "| (6) Cerrar sesión                                         |" << endl;
                 cout << "-------------------------------------------------------------" << endl;
                 cout << "| (0) Salir                                                 |" << endl;
                 cout << "-------------------------------------------------------------" << endl;
@@ -664,7 +822,22 @@ int main()
                     opcionSuscribirseVideojuego();
                 }
                 break;
-                case 9:
+                case 3:
+                {
+                    opcionVerInfoVideojuego();
+                }
+                break;
+                case 4:
+                {
+                    opcionIniciarPartida();
+                }
+                break;
+                case 5:
+                {
+                    opcionVerInfoVideojuego();
+                }
+                break;
+                case 6:
                 {
                     opcionCerrarSesion();
                 }

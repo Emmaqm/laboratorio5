@@ -7,6 +7,8 @@
 #include "ICVideojuego.h"
 #include "ICEliminarVideojuego.h"
 #include "ICSuscripcion.h"
+#include "ICInfoVideojuego.h"
+#include "ICIniciarPartida.h"
 
 class Fabrica{
     private:
@@ -20,7 +22,8 @@ class Fabrica{
         ICVideojuego* getICVideojuego();
         ICEliminarVideojuego* getICEliminarVideojuego();
         ICSuscripcion* getICSuscripcion();
-        
+        ICInfoVideojuego* getICInfoVideojuego();
+        // ICIniciarPartida* getICIniciarPartida();
         ~Fabrica();
 };
 

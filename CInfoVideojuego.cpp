@@ -35,4 +35,4 @@ DtVideojuegoFull* CInfoVideojuego::verInformacionVideojuegos() {
     Videojuego* videojuego = ma->getVideojuego(this->nombre);
     return videojuego->getDtVideojuegoFull();
 
-
+}

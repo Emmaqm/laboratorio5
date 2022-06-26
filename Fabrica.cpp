@@ -6,6 +6,8 @@
 #include "CVideojuego.h"
 #include "CEliminarVideojuego.h"
 #include "CSuscripcion.h"
+#include "CInfoVideojuego.h"
+#include "CIniciarPartida.h"
 
 Fabrica* Fabrica::instancia = NULL;
 
@@ -41,5 +43,13 @@ ICEliminarVideojuego* Fabrica::getICEliminarVideojuego(){
 ICSuscripcion* Fabrica::getICSuscripcion(){
   return new CSuscripcion(); 
 }
+
+ICInfoVideojuego* Fabrica::getICInfoVideojuego(){
+  return new CInfoVideojuego(); 
+}
+
+// ICIniciarPartida* Fabrica::getICIniciarPartida(){
+//   return new CIniciarPartida(); 
+// }
 
 Fabrica::~Fabrica(){}
