@@ -18,7 +18,6 @@ class CSuscripcion:public ICSuscripcion{
         list<string> listarSuscripcionesInactivas();
         bool ingresarVideojuego(string nombreJuego);
         void ingresarMetodoPago(TipoPago pago);
-        bool eliminarSuscripcion(string nombreJuego);
         bool existeSuscripcion();
         bool agregarSuscripcion();
 };

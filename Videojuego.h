@@ -36,6 +36,7 @@ class Videojuego{
         void setCategorias(map<string, Categoria*> categorias);
         void setDesarrollador(Desarrollador* desarrollador);
         bool agregarSuscripcion(Suscripcion* suscripcion);
+        void eliminarSuscripciones();
         ~Videojuego();
 };
 

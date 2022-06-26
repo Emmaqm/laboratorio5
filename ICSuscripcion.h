@@ -13,7 +13,6 @@ class ICSuscripcion{
         virtual void ingresarMetodoPago(TipoPago pago) = 0;
         virtual bool agregarSuscripcion() = 0;
         virtual bool existeSuscripcion() = 0;
-        virtual bool eliminarSuscripcion(string nombreJuego) = 0;
 };
 
 #endif

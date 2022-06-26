@@ -78,12 +78,11 @@ bool Videojuego::agregarSuscripcion(Suscripcion* suscripcion){
     return it.second;
 }
 
-/*bool Videojuego::eliminarSuscripciones(Suscripcion* suscripcion){
-    map<string,Suscripcion *>::iterator it = suscripciones.find(suscripcion->getUsuario()->getEmail());
-    if(it != suscripciones.end()){
-        suscripciones.erase(it);
+void Videojuego::eliminarSuscripciones(){
+    for(map<string, Suscripcion*>::iterator it = this->suscripciones.begin(); it != this->suscripciones.end(); it++) {
+        this->suscripciones.erase(it);
     }
-}*/
+}
 
 Videojuego::~Videojuego(){};
 

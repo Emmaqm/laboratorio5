@@ -3,7 +3,7 @@
 #include "CSuscripcion.h"
 
 list<string> CEliminarVideojuego::listarVideojuegos(){
-    list <string> tempList;
+    list<string> tempList;
     ManejadorVideojuego *ma = ManejadorVideojuego::getInstancia();
 
     Fabrica* fabrica = Fabrica::getInstancia();
@@ -25,13 +25,13 @@ void CEliminarVideojuego::selectVideojuego(string nombre) {
 
 void CEliminarVideojuego::eliminarVideojuego() {
     ManejadorVideojuego *ma = ManejadorVideojuego::getInstancia();
+    
     Videojuego* videojuego = ma->getVideojuego(this->nombre);
     ma->removerVideojuego(videojuego);
 
-    
-    ManejadorVideojuego *ma = ManejadorVideojuego::getInstancia();
-    map<string, Suscripcion*> ::iterator it = videojuego->getSuscripciones(); 
-    //    map<string, Categoria*>::iterator it = this->colCategorias.find(key);
+    videojuego->eliminarSuscripciones();
 
-    //falta eliminar partida
+    //todo: Eliminar partidas
+
+    delete videojuego;
 }
