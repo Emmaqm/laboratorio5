@@ -34,6 +34,24 @@ Desarrollador* Videojuego::getDesarrollador() {
     return this->desarrollador;    
 }
 
+DtVideojuegoFull* Videojuego::getDtVideojuegoFull() {
+
+    string empresa = this->desarrollador->getEmpresa(); 
+
+    list<DtCategoria*> aux;
+
+    map<string, Categoria*>::iterator it = this->categorias.begin();
+    while(it != this->categorias.end()){
+        DtCategoria* dtCategoria = (it->second)->getDtCategoria();
+        aux.push_back(dtCategoria);
+        it++;
+    }
+
+
+    DtVideojuegoFull* dtvideojuegofull = new DtVideojuegoFull(this->nombre, this->descripcion, this->costo, aux, empresa);
+    return dtvideojuegofull;
+}
+
 void Videojuego::setNombre(string nombre){
     this->nombre = nombre;
 }
@@ -60,12 +78,12 @@ bool Videojuego::agregarSuscripcion(Suscripcion* suscripcion){
     return it.second;
 }
 
-bool Videojuego::eliminarSuscripciones(Suscripcion* suscripcion){
+/*bool Videojuego::eliminarSuscripciones(Suscripcion* suscripcion){
     map<string,Suscripcion *>::iterator it = suscripciones.find(suscripcion->getUsuario()->getEmail());
     if(it != suscripciones.end()){
         suscripciones.erase(it);
     }
-}
+}*/
 
 Videojuego::~Videojuego(){};
 
