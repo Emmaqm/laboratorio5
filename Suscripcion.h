@@ -9,19 +9,19 @@ class Suscripcion{
     private:
         TipoPago tipoPago;
         int costo;
-        DtFecha fecha;
+        DtFecha* fecha;
         Usuario* usuario;
     public:
         Suscripcion();
-        Suscripcion(TipoPago tipoPago, int costo, DtFecha fecha, Usuario* usuario);
+        Suscripcion(TipoPago tipoPago, int costo, DtFecha* fecha, Usuario* usuario);
         TipoPago getTipoPago();
         int getCosto();
-        DtFecha getFecha();
+        DtFecha* getFecha();
         Usuario* getUsuario();
-        void setTipoPago(TipoPago);
+        void setTipoPago(TipoPago tipoPago);
         void setCosto(int);
-        void setFecha(DtFecha);
-        void setUsuario(Usuario*);
+        void setFecha(DtFecha* fecha);
+        void setUsuario(Usuario* usuario);
         ~Suscripcion();
 };
 

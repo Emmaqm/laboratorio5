@@ -17,6 +17,7 @@ class ManejadorVideojuego{
         static ManejadorVideojuego* getInstancia();
         list<Videojuego*> getVideojuegos();
         Videojuego* getVideojuego(string nombre);
+        bool existeVideojuego(string nombre);
         bool agregarVideojuego(Videojuego* videojuego);
         void removerVideojuego(Videojuego* videojuego);
 };

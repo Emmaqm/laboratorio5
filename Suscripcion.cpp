@@ -2,7 +2,7 @@
 
 Suscripcion::Suscripcion(){}
 
-Suscripcion::Suscripcion(TipoPago tipoPago, int costo, DtFecha fecha, Usuario* usuario){
+Suscripcion::Suscripcion(TipoPago tipoPago, int costo, DtFecha* fecha, Usuario* usuario){
     this->tipoPago = tipoPago;
     this->costo = costo;
     this->fecha = fecha;
@@ -17,7 +17,7 @@ int Suscripcion::getCosto(){
     return this->costo;
 }
 
-DtFecha Suscripcion::getFecha(){
+DtFecha* Suscripcion::getFecha(){
     return this->fecha;
 }
 
@@ -33,7 +33,7 @@ void Suscripcion::setCosto(int costo) {
     this->costo = costo;
 }
 
-void Suscripcion::setFecha(DtFecha Fecha) {
+void Suscripcion::setFecha(DtFecha* Fecha) {
     this->fecha = fecha;
 }
 

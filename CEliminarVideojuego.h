@@ -14,9 +14,8 @@ class CEliminarVideojuego:public ICEliminarVideojuego {
     string nombre;
   public:
     list<string> listarVideojuegos();
-    //void selectVideojuego(string nombre);
-    //void eliminarVideojuego();
-    //void cancelar();
+    void selectVideojuego(string nombre);
+    void eliminarVideojuego();
 };
 
 #endif

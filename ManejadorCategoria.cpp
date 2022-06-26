@@ -12,10 +12,11 @@ ManejadorCategoria*  ManejadorCategoria::getInstancia(){
 }
 
 list<Categoria*> ManejadorCategoria::getCategorias(){
-    list<Categoria*> categoria;
-    for(map<string, Categoria*>::iterator it = this->colCategorias.begin(); it != this->colCategorias.end(); it++)
-        categoria.push_back(it->second);
-    return categoria;
+    list<Categoria*> categorias;
+    for(map<string, Categoria*>::iterator it = this->colCategorias.begin(); it != this->colCategorias.end(); it++) {
+        categorias.push_back(it->second);
+    }
+    return categorias;
 }
  
 bool ManejadorCategoria::agregarCategoria(Categoria* categoria){

@@ -3,7 +3,6 @@
 
 using namespace std;
 
-DtFecha::DtFecha(){};
 DtFecha::DtFecha(int dia, int mes, int anio, int hora, int minuto){
     if(dia > 31 || dia < 1 || mes > 12 || mes < 1 || anio < 1900) {
         throw invalid_argument("Fecha invalida");
@@ -17,6 +16,18 @@ DtFecha::DtFecha(int dia, int mes, int anio, int hora, int minuto){
     this->anio = anio;
     this->hora = hora;
     this->minuto = minuto;
+};
+
+DtFecha::DtFecha(){
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+
+    this->dia = ltm->tm_mday;
+    this->mes = 1 + ltm->tm_mon;
+    this->anio = 1900 + ltm->tm_year;
+
+    this->hora = ltm->tm_hour;
+    this->minuto = ltm->tm_min;
 };
 
 int DtFecha::getDia(){

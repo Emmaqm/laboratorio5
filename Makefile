@@ -49,8 +49,8 @@ DtCategoria.o: DtCategoria.cpp
 Usuario.o: Usuario.cpp
 	g++ -g -c Usuario.cpp
 
-Desarollador.o: Desarollador.cpp
-	g++ -g -c Desarollador.cpp
+Desarrollador.o: Desarrollador.cpp
+	g++ -g -c Desarrollador.cpp
 
 Jugador.o: Jugador.cpp
 	g++ -g -c Jugador.cpp

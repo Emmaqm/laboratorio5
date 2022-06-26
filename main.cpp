@@ -17,8 +17,8 @@ ICUsuario *controladorUsuario;
 ICSesion *controladorSesion;
 ICCategoria *controladorCategoria;
 ICVideojuego *controladorVideojuego;
-ICEliminarVideojuego* ControladorElimVideojuego;
-ICSuscripcion* controladorSuscripcion;
+ICEliminarVideojuego *controladorElimVideojuego;
+ICSuscripcion *controladorSuscripcion;
 
 void seederUsuario()
 {
@@ -51,34 +51,32 @@ void seederCategorias()
     delete controladorCategoria;
 }
 
-
 void seederJuegos()
 {
     controladorVideojuego = fabrica->getICVideojuego();
 
     controladorVideojuego->ingresarDatos("Fifa22", "Descripcion", 60);
-    DtCategoria* dtCategoria = new DtCategoria("Deportes-PS4");
+    DtCategoria *dtCategoria = new DtCategoria("Deportes-PS4");
     controladorVideojuego->ingresarCategoria(dtCategoria);
-    controladorVideojuego->seedJuego();       
-        
+    controladorVideojuego->seedJuego();
+
     controladorVideojuego->ingresarDatos("CSGO", "Descripcion", 5);
-    DtCategoria* dtCategoria2 = new DtCategoria("Shooter-PC");
+    DtCategoria *dtCategoria2 = new DtCategoria("Shooter-PC");
     controladorVideojuego->ingresarCategoria(dtCategoria);
-    controladorVideojuego->seedJuego();       
+    controladorVideojuego->seedJuego();
 
     controladorVideojuego->ingresarDatos("Mario", "Descripcion", 55);
-    DtCategoria* dtCategoria3 = new DtCategoria("Plataforma-Switch");
+    DtCategoria *dtCategoria3 = new DtCategoria("Plataforma-Switch");
     controladorVideojuego->ingresarCategoria(dtCategoria);
-    controladorVideojuego->seedJuego();    
+    controladorVideojuego->seedJuego();
 
     controladorVideojuego->ingresarDatos("Spyro", "Descripcion", 42);
-    DtCategoria* dtCategoria4 = new DtCategoria("Plataforma-Switch");
+    DtCategoria *dtCategoria4 = new DtCategoria("Plataforma-Switch");
     controladorVideojuego->ingresarCategoria(dtCategoria);
-    controladorVideojuego->seedJuego();       
+    controladorVideojuego->seedJuego();
 
-    delete controladorVideojuego;  
+    delete controladorVideojuego;
 }
-
 
 void opcionIniciarSesion()
 {
@@ -131,8 +129,7 @@ void opcionCrearUsuario()
 
     cout << "Ingrese el tipo de usuario " << endl;
     cout << "(D)esarrollador o (J)ugador: ";
-   
-    
+
     char tipo;
     cin >> tipo;
 
@@ -158,7 +155,7 @@ void opcionCrearUsuario()
         cout << "---------------------------------" << endl;
         cout << "| ❌  Tipo de usuario inválido  |" << endl;
         cout << "---------------------------------" << endl;
-
+        return;
     }
 
     if (controladorUsuario->altaUsuario())
@@ -201,14 +198,14 @@ void opcionAgregarCategoria()
     cout << "-------------------------------------------------------------" << endl;
 
     controladorCategoria = fabrica->getICCategoria();
-    list<DtCategoria*> categorias = controladorCategoria->listarCategorias();
+    list<DtCategoria *> categorias = controladorCategoria->listarCategorias();
 
     if (!categorias.empty())
     {
         cout << endl;
         cout << "Se listan las Categorias existentes (Genero-Plataforma):" << endl;
         cout << "-------------------------------------------------------------" << endl;
-        for (list<DtCategoria*>::iterator it = categorias.begin(); it != categorias.end(); it++)
+        for (list<DtCategoria *>::iterator it = categorias.begin(); it != categorias.end(); it++)
         {
             cout << (*it)->getKey() << endl;
         }
@@ -264,10 +261,11 @@ void opcionAgregarCategoria()
     }
 }
 
-void opcionAgregarVideojuego() {
+void opcionAgregarVideojuego()
+{
     controladorVideojuego = fabrica->getICVideojuego();
     controladorCategoria = fabrica->getICCategoria();
-    list<DtCategoria*> categorias = controladorCategoria->listarCategorias();
+    list<DtCategoria *> categorias = controladorCategoria->listarCategorias();
 
     string nombre, descripcion, keyCategoria;
     int costo;
@@ -289,20 +287,21 @@ void opcionAgregarVideojuego() {
     {
         cout << "Se listan las Categorias disponibles (Genero-Plataforma):" << endl;
         cout << "-------------------------------------------------------------" << endl;
-        for (list<DtCategoria*>::iterator it = categorias.begin(); it != categorias.end(); it++)
+        for (list<DtCategoria *>::iterator it = categorias.begin(); it != categorias.end(); it++)
         {
-            cout << (*it)->getKey() <<  endl;
+            cout << (*it)->getKey() << endl;
         }
         cout << "-------------------------------------------------------------" << endl;
 
         bool seguirC = true;
-        while (seguirC) {
+        while (seguirC)
+        {
             cout << "Ingrese una de las categorías disponibles: ";
             cin >> keyCategoria;
 
             try
             {
-                DtCategoria* dtCategoria = new DtCategoria(keyCategoria);
+                DtCategoria *dtCategoria = new DtCategoria(keyCategoria);
                 controladorVideojuego->ingresarCategoria(dtCategoria);
 
                 char confirm;
@@ -313,26 +312,29 @@ void opcionAgregarVideojuego() {
                     cout << "Confirma agregar el videojuego (s/n): ";
                     cin >> confirm;
 
-                    if (confirm == 's' || confirm == 'S'){
+                    if (confirm == 's' || confirm == 'S')
+                    {
                         controladorVideojuego->agregarJuego();
                         cout << "----------------------------" << endl;
                         cout << "| ✅  Videojuego agregado  |" << endl;
                         cout << "----------------------------" << endl;
                         seguirC = false;
-                    }else {
+                    }
+                    else
+                    {
                         cout << "------------------------------" << endl;
                         cout << "| 🔷 Videojuego no agregado  |" << endl;
                         cout << "------------------------------" << endl;
                         seguirC = false;
                     }
-                }        
+                }
             }
-            catch(invalid_argument ex)
+            catch (invalid_argument ex)
             {
                 cout << ex.what() << endl;
             }
         }
-    } 
+    }
     else
     {
         cout << "-----------------------------------------------------------------" << endl;
@@ -342,82 +344,180 @@ void opcionAgregarVideojuego() {
     }
 }
 
-void opcionSuscribirseVideojuego(){
+void opcionSuscribirseVideojuego()
+{
     controladorSuscripcion = fabrica->getICSuscripcion();
     try
     {
+        list<string> suscripcionesActivas = controladorSuscripcion->listarSuscripcionesActivas();
+        list<string> suscripcionesInactivas = controladorSuscripcion->listarSuscripcionesInactivas();
 
-    list<string> suscripcionesActivas = controladorSuscripcion->listarSuscripcionesActivas();
-    list<string> suscripcionesInactivas = controladorSuscripcion->listarSuscripcionesInactivas();
-
-    cout << endl;
-    cout << "-------------------------------------------------------------" << endl;
-    cout << "| Suscribirse a videojuego                                  |" << endl;
-    cout << "-------------------------------------------------------------" << endl;
-
+        cout << endl;
+        cout << "-------------------------------------------------------------" << endl;
+        cout << "| Suscribirse a videojuego                                  |" << endl;
+        cout << "-------------------------------------------------------------" << endl;
 
         cout << "Se listan las suscripciones activas:" << endl;
         cout << "-------------------------------------------------------------" << endl;
-
         for (list<string>::iterator it = suscripcionesActivas.begin(); it != suscripcionesActivas.end(); it++)
         {
-            cout << (*it) <<  endl;
+            cout << (*it) << endl;
         }
 
+        cout << endl;
         cout << "Se listan las suscripciones inactivas:" << endl;
         cout << "-------------------------------------------------------------" << endl;
-
         for (list<string>::iterator it = suscripcionesInactivas.begin(); it != suscripcionesInactivas.end(); it++)
         {
-            cout << (*it) <<  endl;
+            cout << (*it) << endl;
         }
 
+        string nombre;
+        cout << endl;
+        cout << "Ingresar datos para suscribirse:" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+        cout << "Ingrese el nombre del videojuego: ";
+        cin >> nombre;
+
+        bool ingresado = controladorSuscripcion->ingresarVideojuego(nombre);
+
+        if (ingresado == false)
+        {
+            cout << "------------------------------------" << endl;
+            cout << "| ❌ El juego ingresado no existe  |" << endl;
+            cout << "------------------------------------" << endl;
+        }
+        else
+        {
+            if (controladorSuscripcion->existeSuscripcion())
+            {
+                cout << "--------------------------------------------------------" << endl;
+                cout << "| ❌ Ya tienes una suscripción activa para este juego  |" << endl;
+                cout << "--------------------------------------------------------" << endl;
+            }
+            else
+            {
+                char tipo;
+                TipoPago tipoPago;
+                cout << "Ingrese su método de pago:" << endl;
+                cout << "(C)rédito o (D)ébito: ";
+                cin >> tipo;
+                if (tipo == 'C' || tipo == 'c')
+                {
+                    tipoPago = CREDITO;
+                }
+                else if (tipo == 'D' || tipo == 'd')
+                {
+                    tipoPago = DEBITO;
+                }
+                else
+                {
+                    cout << "-------------------------------" << endl;
+                    cout << "| ❌ Método de pago inválido  |" << endl;
+                    cout << "-------------------------------" << endl;
+                    return;
+                }
+
+                controladorSuscripcion->ingresarMetodoPago(tipoPago);
+
+                char confirm;
+                cout << "Confirma la compra de esta suscripción (s/n): ";
+                cin >> confirm;
+
+                if (confirm == 's' || confirm == 'S')
+                {
+                    if (controladorSuscripcion->agregarSuscripcion())
+                    {
+                        cout << "------------------------------" << endl;
+                        cout << "| ✅  Suscripción adquirida  |" << endl;
+                        cout << "------------------------------" << endl;
+                    }
+                    else
+                    {
+                        cout << "--------------------------------------" << endl;
+                        cout << "| ❌  Error al adquirir suscripción  |" << endl;
+                        cout << "--------------------------------------" << endl;
+                    }
+                }
+                else
+                {
+                    cout << "-----------------------------" << endl;
+                    cout << "| 🔷 Suscripción cancelada  |" << endl;
+                    cout << "-----------------------------" << endl;
+                }
+            }
+        }
     }
-    catch(invalid_argument ex)
+    catch (invalid_argument ex)
     {
         cout << ex.what() << endl;
     }
 }
 
-void opcionEliminarVideojuego(){
-    bool salir = false; 
+void opcionEliminarVideojuego()
+{
+    bool encontrado = false;
     string opcion;
-    ControladorElimVideojuego = fabrica->getICEliminarVideojuego();
+    controladorElimVideojuego = fabrica->getICEliminarVideojuego();
 
-    if(controladorSesion->esDesarrollador()){
-        list<string> videojuegos = ControladorElimVideojuego->listarVideojuegos();
+    if (controladorSesion->esDesarrollador())
+    {
+        list<string> videojuegos = controladorElimVideojuego->listarVideojuegos();
 
-        if(!videojuegos.empty()){
-            cout<< "Videojuegos disponibles:"<< endl;
-            for(list<string>::iterator it = videojuegos.begin(); it != videojuegos.end(); ++it ){
-                    cout<< (*it) << endl;
+        if (!videojuegos.empty())
+        {
+            cout << "Videojuegos disponibles:" << endl;
+            for (list<string>::iterator it = videojuegos.begin(); it != videojuegos.end(); ++it)
+            {
+                cout << (*it) << endl;
             }
-            do{
-                 cout << endl << " Ingrese el nombre del videojuego que desea eliminar: " << endl;
-                 cin>>opcion;  
-                 for(list<string>::iterator iter = videojuegos.begin(); iter != videojuegos.end(); ++iter){
-                    if(*iter == opcion){
-                        salir=true;
-                    }
-                    if(!salir){
-                            cout<<" _________________________________________________"<<endl;
-                            cout<<"|                                                 |"<<endl;
-                            cout<<"|  ❌ El nombre del videojuego es incorrecto      |"<<endl;
-                            cout<<"|                                                 |"<<endl;
-                            cout<<"|_________________________________________________|"<<endl;
-                    }
 
+            cout << endl;
+            cout << "Ingrese el nombre del videojuego que desea eliminar: ";
+            cin >> opcion;
+            for (list<string>::iterator iter = videojuegos.begin(); iter != videojuegos.end(); ++iter)
+            {
+                if (*iter == opcion)
+                {
+                    encontrado = true;                    
+                }
+            }
+            if (encontrado)
+            {
+                controladorElimVideojuego->selectVideojuego(opcion);
+                char confirm;
+                cout << "Confirma eliminar el videojuego? (s/n): ";
+                cin >> confirm;
 
-
-                 }
-
-            }while( !salir );
-
+                if (confirm == 's' || confirm == 'S')
+                {
+                    controladorElimVideojuego->eliminarVideojuego();
+                    cout << "----------------------------" << endl;
+                    cout << "| ✅  Videojuego eliminado |" << endl;
+                    cout << "----------------------------" << endl;
+                }
+                else
+                {
+                    cout << "-------------------------------" << endl;
+                    cout << "| 🔷 Videojuego no eliminado  |" << endl;
+                    cout << "-------------------------------" << endl;
+                }
+            }
+            else
+            {
+                cout << "------------------------------------" << endl;
+                cout << "| ❌  Nombre del juego incorrecto  |" << endl;
+                cout << "------------------------------------" << endl;
+            }
         }
-    
     }
-    
-} 
+    else
+    {
+        cout << "-----------------------------" << endl;
+        cout << "| ❌  Usuario sin permisos  |" << endl;
+        cout << "-----------------------------" << endl;
+    }
+}
 
 int main()
 {
@@ -431,7 +531,7 @@ int main()
     seederUsuario();
     seederCategorias();
     seederJuegos();
-    
+
     do
     {
         controladorSesion->datosUsuario(emailUsuario, tipoUsuario);
@@ -475,9 +575,10 @@ int main()
                 break;
             }
         }
-        else 
+        else
         {
-            if(tipoUsuario == "Desarrollador") {
+            if (tipoUsuario == "Desarrollador")
+            {
                 cout << endl;
                 cout << "Bienvenido " << emailUsuario << "!" << endl;
                 cout << "-------------------------------------------------------------" << endl;
@@ -486,11 +587,12 @@ int main()
                 cout << "| (1) Crear usuario                                         |" << endl;
                 cout << "| (2) Agregar categoria                                     |" << endl;
                 cout << "| (3) Agregar videojuego                                    |" << endl;
+                cout << "| (4) Eliminar videojuego                                   |" << endl;
                 cout << "| (9) Cerrar sesión                                         |" << endl;
                 cout << "-------------------------------------------------------------" << endl;
                 cout << "| (0) Salir                                                 |" << endl;
                 cout << "-------------------------------------------------------------" << endl;
-                cout << "Ingrese una opción: ";    
+                cout << "Ingrese una opción: ";
                 cin >> opcion;
 
                 switch (opcion)
@@ -515,6 +617,11 @@ int main()
                     opcionAgregarVideojuego();
                 }
                 break;
+                case 4:
+                {
+                    opcionEliminarVideojuego();
+                }
+                break;
                 case 9:
                 {
                     opcionCerrarSesion();
@@ -523,7 +630,9 @@ int main()
                 default:
                     break;
                 }
-            } else {
+            }
+            else
+            {
                 cout << endl;
                 cout << "Bienvenido " << emailUsuario << "!" << endl;
                 cout << "-------------------------------------------------------------" << endl;
@@ -535,10 +644,10 @@ int main()
                 cout << "-------------------------------------------------------------" << endl;
                 cout << "| (0) Salir                                                 |" << endl;
                 cout << "-------------------------------------------------------------" << endl;
-                cout << "Ingrese una opción: ";    
+                cout << "Ingrese una opción: ";
                 cin >> opcion;
 
-                 switch (opcion)
+                switch (opcion)
                 {
                 case 0:
                 {
@@ -548,12 +657,12 @@ int main()
                 case 1:
                 {
                     opcionCrearUsuario();
-                }                
+                }
                 break;
                 case 2:
                 {
                     opcionSuscribirseVideojuego();
-                }                
+                }
                 break;
                 case 9:
                 {
@@ -564,8 +673,6 @@ int main()
                     break;
                 }
             }
-        
-        
         }
 
     } while (seguir);
