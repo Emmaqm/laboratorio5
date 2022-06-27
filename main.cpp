@@ -39,6 +39,11 @@ void seederUsuario()
     controladorUsuario->datosJugador("nick", "desc");
     controladorUsuario->altaUsuario();
 
+    DtUsuario *datosUsuarioI = new DtUsuario("i", "i");
+    controladorUsuario->datosComunes(datosUsuarioI);
+    controladorUsuario->datosJugador("ivan", "descripcion");
+    controladorUsuario->altaUsuario();
+
     delete controladorUsuario;
 }
 
@@ -86,7 +91,12 @@ void seederJuegos()
     controladorVideojuego->seedJuego();
 
     controladorVideojuego->ingresarDatos("Spyro", "Descripcion", 42);
-    DtCategoria *dtCategoria4 = new DtCategoria("Plataforma-Switch");
+    DtCategoria *dtCategoria4 = new DtCategoria("Supervivencia-Xbox");
+    controladorVideojuego->ingresarCategoria(dtCategoria);
+    controladorVideojuego->seedJuego();
+
+    controladorVideojuego->ingresarDatos("Crash", "Descripcion", 42);
+    DtCategoria *dtCategoria5 = new DtCategoria("Plataforma-PS4");
     controladorVideojuego->ingresarCategoria(dtCategoria);
     controladorVideojuego->seedJuego();
 
@@ -542,15 +552,16 @@ void opcionVerInfoVideojuego()
     bool encontrado = false;
     string opcion;
     list<string> infoVideojuego = controladorInfoVideojuego->listarVideojuegos();
-    
+
     if (!infoVideojuego.empty())
     {
-        cout << "Ingrese el nombre del juego cual desea ver la informacion:" << endl;
-        cout << "-------------------------------------------------------------" << endl;
         for (list<string>::iterator it = infoVideojuego.begin(); it != infoVideojuego.end(); it++)
         {
             cout << (*it) << endl;
         }
+
+        cout << "Ingrese el nombre del juego cual desea ver la informacion:" << endl;
+        cout << "-------------------------------------------------------------" << endl;
         cin >> opcion;
 
         for (list<string>::iterator iter = infoVideojuego.begin(); iter != infoVideojuego.end(); ++iter)
@@ -561,30 +572,40 @@ void opcionVerInfoVideojuego()
             }
         }
 
-        if(encontrado){ 
-            DtVideojuegoFull* aux = new DtVideojuegoFull();
-            
+        if (encontrado)
+        {
+            DtVideojuegoFull *aux = new DtVideojuegoFull();
+
             controladorInfoVideojuego->selectVideojuego(opcion);
             aux = controladorInfoVideojuego->verInformacionVideojuegos();
-            
-            cout << "Nombre:" <<endl;
-            cout << aux->getNombre() <<endl;
-            
-            cout << "Costo:" <<endl;
-            cout << aux->getCosto() <<endl;
-            
-            cout << "Descripcion:" <<endl;
-            cout << aux->getDescripcion() <<endl;
-            
-            cout << "Empresa:" << endl;
-            cout << aux->getEmpresa() <<endl;
-            
-            cout << "Cantidad total de horas:" << endl;
-            cout << aux->getDuracionTotal() <<endl;
-             
-        }
-    
 
+            cout << "Nombre: ";
+            cout << aux->getNombre() << endl;
+
+            cout << "Costo: ";
+            cout << aux->getCosto() << endl;
+
+            cout << "Descripcion: ";
+            cout << aux->getDescripcion() << endl;
+
+            cout << "Empresa: ";
+            cout << aux->getEmpresa() << endl;
+
+            cout << "Cantidad total de horas: ";
+            cout << aux->getDuracionTotal() << endl;
+        }
+        else
+        {
+            cout << "-----------------------------------------" << endl;
+            cout << "| ❌  No se ha encontrado el videojuego |" << endl;
+            cout << "-----------------------------------------" << endl;
+        }
+    }
+    else
+    {
+        cout << "--------------------------------------" << endl;
+        cout << "| ❌  No hay videojuegos para listar |" << endl;
+        cout << "--------------------------------------" << endl;
     }
 }
 
@@ -604,7 +625,7 @@ void opcionIniciarPartida()
     {
         cout << (*it) << endl;
     }
-    
+
     string nombre;
     cout << endl;
     cout << "Ingresar datos para iniciar partida:" << endl;
@@ -613,7 +634,7 @@ void opcionIniciarPartida()
     cin >> nombre;
 
     controladorIniciarPartida->seleccionarVideojuego(nombre);
-    
+
     char tipo;
     cout << "Desea iniciar una partida (I)ndividual o (M)ultijugador: ";
     cin >> tipo;
@@ -626,16 +647,17 @@ void opcionIniciarPartida()
         if (confirm == 's' || confirm == 'S')
         {
             continuaPartida = true;
-        } else {
+        }
+        else
+        {
             continuaPartida = false;
         }
-        
+
         int duracion;
-        cout << "Ingrese la duración de la partida (en minutos): "; 
+        cout << "Ingrese la duración de la partida (en minutos): ";
         cin >> duracion;
 
         controladorIniciarPartida->datosPartidaIndividual(continuaPartida, duracion);
-        
     }
     else if (tipo == 'M' || tipo == 'm')
     {
@@ -643,18 +665,21 @@ void opcionIniciarPartida()
         char confirm;
         bool enVivo;
         cin >> confirm;
-        if (confirm == 's' || confirm == 'S') {
+        if (confirm == 's' || confirm == 'S')
+        {
             enVivo = true;
-        } else {
+        }
+        else
+        {
             enVivo = false;
         }
 
         int cantJugadores;
-        cout << "Ingrese la cantidad máxima de jugadores: "; 
+        cout << "Ingrese la cantidad máxima de jugadores: ";
         cin >> cantJugadores;
 
         int duracion;
-        cout << "Ingrese la duración de la partida (en minutos): "; 
+        cout << "Ingrese la duración de la partida (en minutos): ";
         cin >> duracion;
 
         controladorIniciarPartida->datosPartidaMultijugador(enVivo, cantJugadores, duracion);
@@ -666,18 +691,21 @@ void opcionIniciarPartida()
         cout << "--------------------------------" << endl;
         return;
     }
-    
+
     char iniciar;
     cout << "¿Confirma iniciar la partida? (s/n): ";
     cin >> iniciar;
 
     if (iniciar == 's' || iniciar == 'S')
     {
-        if(controladorIniciarPartida->iniciarPartida()) {
+        if (controladorIniciarPartida->iniciarPartida())
+        {
             cout << "-------------------------" << endl;
             cout << "| ✅  Partida iniciada  |" << endl;
             cout << "-------------------------" << endl;
-        }else {
+        }
+        else
+        {
             cout << "----------------------------------" << endl;
             cout << "| ❌ Datos del juego incorrectos |" << endl;
             cout << "----------------------------------" << endl;
@@ -746,6 +774,10 @@ int main()
             {
                 seederCategorias();
                 seederJuegos();
+
+                cout << "-----------------------------------" << endl;
+                cout << "| ✅ Datos cargados exitosamente  |" << endl;
+                cout << "-----------------------------------" << endl;
             }
             default:
                 break;
@@ -776,7 +808,7 @@ int main()
                 {
                 case 0:
                 {
-                    seguir = true;
+                    seguir = false;
                 }
                 break;
                 case 1:
@@ -836,7 +868,7 @@ int main()
                 {
                 case 0:
                 {
-                    seguir = true;
+                    seguir = false;
                 }
                 break;
                 case 1:
