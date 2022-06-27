@@ -160,19 +160,21 @@ void opcionCrearUsuario()
 
     if (tipo == 'D' || tipo == 'd')
     {
-        cout << "Ingrese el nombre de la empresa: ";
         string nombreEmpresa;
-        cin >> nombreEmpresa;
+        cout << "Ingrese el nombre de la empresa: ";
+        cin.ignore();
+        getline(cin, nombreEmpresa);
         controladorUsuario->datosEmpresa(nombreEmpresa);
     }
     else if (tipo == 'J' || tipo == 'j')
     {
-        cout << "Ingrese el nickname del jugador: ";
         string nickname;
+        cout << "Ingrese el nickname del jugador: ";
         cin >> nickname;
-        cout << "Ingrese la descripcion del jugador: ";
         string descripcion;
-        cin >> descripcion;
+        cout << "Ingrese la descripcion del jugador: ";
+        cin.ignore();
+        getline(cin, descripcion);
         controladorUsuario->datosJugador(nickname, descripcion);
     }
     else
@@ -249,7 +251,8 @@ void opcionAgregarCategoria()
     cout << "Ingrese la plataforma: ";
     cin >> plataforma;
     cout << "Ingrese la descripcion: ";
-    cin >> descripcion;
+    cin.ignore();
+    getline(cin, descripcion);
 
     controladorCategoria->ingresarDatos(genero, plataforma, descripcion);
 
@@ -302,7 +305,8 @@ void opcionAgregarVideojuego()
     cout << "Ingrese el nombre: ";
     cin >> nombre;
     cout << "Ingrese la descripcion: ";
-    cin >> descripcion;
+    cin.ignore();
+    getline(cin, descripcion);
     cout << "Ingrese el costo: ";
     cin >> costo;
 
@@ -382,11 +386,22 @@ void opcionSuscribirseVideojuego()
         cout << "| Suscribirse a videojuego                                  |" << endl;
         cout << "-------------------------------------------------------------" << endl;
 
-        cout << "Se listan las suscripciones activas:" << endl;
-        cout << "-------------------------------------------------------------" << endl;
-        for (list<string>::iterator it = suscripcionesActivas.begin(); it != suscripcionesActivas.end(); it++)
-        {
-            cout << (*it) << endl;
+
+        if(!suscripcionesActivas.empty()) {    
+            cout << "Se listan las suscripciones activas:" << endl;
+            cout << "-------------------------------------------------------------" << endl;
+            for (list<string>::iterator it = suscripcionesActivas.begin(); it != suscripcionesActivas.end(); it++)
+            {
+                cout << (*it) << endl;
+            }
+        }
+
+        if(suscripcionesInactivas.empty()) {
+
+            cout << "--------------------------------------------------------" << endl;
+            cout << "| ❌ No hay videojuegos disponibles para suscribirse   |" << endl;
+            cout << "--------------------------------------------------------" << endl;
+            return;
         }
 
         cout << endl;
@@ -591,7 +606,7 @@ void opcionVerInfoVideojuego()
             cout << "Empresa: ";
             cout << aux->getEmpresa() << endl;
 
-            cout << "Cantidad total de horas: ";
+            cout << "Tiempo jugado (en minutos): ";
             cout << aux->getDuracionTotal() << endl;
         }
         else
@@ -618,6 +633,14 @@ void opcionIniciarPartida()
     cout << "-------------------------------------------------------------" << endl;
     cout << "| Iniciar partida                                           |" << endl;
     cout << "-------------------------------------------------------------" << endl;
+
+    if(suscripcionesActivas.empty()) {
+        cout << "-------------------------------------------------------------------------" << endl;
+        cout << "| ❌ No tienes suscripciones activas                                    |" << endl;
+        cout << "|    Para iniciar una partida debes tener al menos una suscripción.     |" << endl;
+        cout << "-------------------------------------------------------------------------" << endl;
+        return;
+    }
 
     cout << "Se listan los juegos con suscripcion activa:" << endl;
     cout << "-------------------------------------------------------------" << endl;
